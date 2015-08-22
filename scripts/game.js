@@ -1,20 +1,22 @@
 var Game = function () {};
 
 Game.init = function() {
-  Game.currentstage = new createjs.Stage('mainCanvas');
+  Game.currentStage = new createjs.Stage('mainCanvas');
   Game.kraken = new Kraken();
   Game.keyboard = new Keyboard();
   Game.currentstage.addChild(Game.kraken.shape);
   Game.currentstage.update();
   Game.speed = 20.0; // pixels per second
+  Game.resize();
   createjs.Ticker.addEventListener("tick", Game.tick);
   $(window).keydown(Game.onKeydown);
   $(window).keyup(Game.onKeyup);
+  $(window).resize(Game.resize);
 };
 
 Game.tick = function(event) {
   Game.kraken.update(event);
-  Game.currentstage.update();
+  Game.currentStage.update();
 };
 
 Game.timeToDist = function(vel, ms){
@@ -66,3 +68,11 @@ Game.onKeyup = function(event) {
     event.preventDefault();
   }
 };
+/**
+ * When the window is resized, resize the canvas.
+ */
+Game.resize = function() {
+	Game.currentStage.canvas.width = window.innerWidth;
+	Game.currentStage.canvas.height = window.innerHeight;
+};
+
