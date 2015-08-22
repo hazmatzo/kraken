@@ -7,5 +7,5 @@ var Keyboard = function() {
 	this.ESCAPE = 27;
 	this.A = 65;
 	this.SPACE = 32;
-}
+};
 
