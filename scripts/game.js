@@ -1,4 +1,4 @@
-var Game = {};
+var Game = function () {};
 
 Game.init = function() {
   Game.currentstage = new createjs.Stage('mainCanvas');
@@ -10,7 +10,7 @@ Game.init = function() {
 };
 
 Game.tick = function(event) {
-  Game.kraken.update();
+  Game.kraken.update(event);
   Game.currentstage.update();
 }
 

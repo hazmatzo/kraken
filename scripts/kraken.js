@@ -5,7 +5,7 @@ var Kraken = function() {
 	this.shape = this.createKrakenShape(this.x, this.y);
 }
 
-Kraken.prototype.update = function() {
+Kraken.prototype.update = function(event) {
 	this.shape.x = this.x;
 	this.shape.y = this.y;
 }
