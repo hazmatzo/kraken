@@ -8,6 +8,7 @@ Game.init = function() {
   Game.currentStage.update();
   Game.speed = 20.0; // pixels per second
   Game.resize();
+  createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
   $(window).keydown(Game.onKeydown);
   $(window).keyup(Game.onKeyup);
