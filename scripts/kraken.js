@@ -30,7 +30,9 @@ Kraken.prototype.moveDown = function() {
 
 Kraken.prototype.createKrakenShape = function(x, y) {
   var circle = new createjs.Shape();
-  circle.graphics.beginFill('DeepSkyBlue').drawCircle(0, 0, 50);
+  circle.graphics.beginFill('DeepSkyBlue').drawCircle(25, 25, 50);
+  circle.regX = 25;
+  circle.regY = 25;
   circle.x = x;
   circle.y = y;
   return circle;
