@@ -5,20 +5,25 @@ var Kraken = function() {
 	this.shape = this.createKrakenShape(this.x, this.y);
 }
 
-Kraken.prototype.moveLeft = function() {
+Kraken.prototype.update = function() {
+	this.shape.x = this.x;
+	this.shape.y = this.y;
+}
 
+Kraken.prototype.moveLeft = function() {
+	this.x = this.x - 5;
 }
 
 Kraken.prototype.moveRight = function() {
-
+	this.x = this.x + 5;
 }
 
 Kraken.prototype.moveUp = function() {
-
+	this.y = this.y + 5;
 }
 
 Kraken.prototype.moveDown = function() {
-
+	this.y = this.y - 5;
 }
 
 Kraken.prototype.createKrakenShape = function(x, y) {
