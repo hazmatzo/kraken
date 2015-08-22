@@ -4,8 +4,8 @@ Game.init = function() {
   Game.currentStage = new createjs.Stage('mainCanvas');
   Game.kraken = new Kraken();
   Game.keyboard = new Keyboard();
-  Game.currentstage.addChild(Game.kraken.shape);
-  Game.currentstage.update();
+  Game.currentStage.addChild(Game.kraken.shape);
+  Game.currentStage.update();
   Game.speed = 20.0; // pixels per second
   Game.resize();
   createjs.Ticker.addEventListener("tick", Game.tick);
