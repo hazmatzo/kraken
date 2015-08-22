@@ -23,7 +23,7 @@ Kraken.prototype.startLeft = function() {
 };
 
 Kraken.prototype.stopLeft = function() {
-  this.velX = 0.0;
+  this.velX = Math.max(0.0, this.velX);
 };
 
 Kraken.prototype.startRight = function() {
@@ -31,7 +31,7 @@ Kraken.prototype.startRight = function() {
 };
 
 Kraken.prototype.stopRight = function() {
-  this.velX = 0.0;
+  this.velX = Math.min(0.0, this.velX);
 };
 
 Kraken.prototype.startUp = function() {
@@ -39,7 +39,7 @@ Kraken.prototype.startUp = function() {
 };
 
 Kraken.prototype.stopUp = function() {
-  this.velY = 0.0;
+  this.velY = Math.max(0.0, this.velY);
 };
 
 Kraken.prototype.startDown = function() {
@@ -47,7 +47,7 @@ Kraken.prototype.startDown = function() {
 };
 
 Kraken.prototype.stopDown = function() {
-  this.velY = 0.0;
+  this.velY = Math.max(0.0, this.velY);
 };
 
 Kraken.prototype.createKrakenShape = function(x, y) {
