@@ -4,7 +4,7 @@ var Kraken = function() {
   this.y = 100.0;
   this.velX = 0;
   this.velY = 0;
-  this.speed = 5.0;
+  this.speed = 3.0;
   this.scale = 1.0;
   this.shape = this.createKrakenShape(this.x, this.y);
 };
@@ -19,7 +19,7 @@ Kraken.prototype.update = function(event) {
 };
 
 Kraken.prototype.startLeft = function() {
-  this.velX -= this.speed * 1.0;
+  this.velX = -this.speed * 1.0;
 };
 
 Kraken.prototype.stopLeft = function() {
@@ -27,7 +27,7 @@ Kraken.prototype.stopLeft = function() {
 };
 
 Kraken.prototype.startRight = function() {
-  this.velX += this.speed * 1.0;
+  this.velX = this.speed * 1.0;
 };
 
 Kraken.prototype.stopRight = function() {
@@ -35,7 +35,7 @@ Kraken.prototype.stopRight = function() {
 };
 
 Kraken.prototype.startUp = function() {
-  this.velY -= this.speed * 1.0;
+  this.velY = -this.speed * 1.0;
 };
 
 Kraken.prototype.stopUp = function() {
@@ -43,7 +43,7 @@ Kraken.prototype.stopUp = function() {
 };
 
 Kraken.prototype.startDown = function() {
-  this.velY += this.speed * 1.0;
+  this.velY = this.speed * 1.0;
 };
 
 Kraken.prototype.stopDown = function() {
