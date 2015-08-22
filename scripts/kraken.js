@@ -21,11 +21,11 @@ Kraken.prototype.moveRight = function() {
 };
 
 Kraken.prototype.moveUp = function() {
-  this.y = this.y + 5;
+  this.y = this.y - 5;
 };
 
 Kraken.prototype.moveDown = function() {
-  this.y = this.y - 5;
+  this.y = this.y + 5;
 };
 
 Kraken.prototype.createKrakenShape = function(x, y) {
