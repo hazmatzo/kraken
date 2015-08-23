@@ -16,7 +16,3 @@ Water.prototype.createShape = function() {
 Water.prototype.setSize = function() {
   this.shape.graphics.drawRect(0, 100, Game.getWidth(), Game.getHeight());
 };
-
-// Water.prototype.getWaterLine = function() {
-//   return this.shape.y;
-// }
