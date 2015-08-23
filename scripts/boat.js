@@ -2,7 +2,7 @@ Boat = function(x) {
   this.x = x;
   this.y = Game.water.waterLine - (0.2 * Game.water.waterLine);
   this.shape = this.createBoatShape(this.x, this.y);
-  this.brain = new RandomBrain(this);
+  this.brain = new RandomBrain(this, 0);
 };
 
 Boat.prototype = new Agent();

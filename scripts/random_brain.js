@@ -1,8 +1,8 @@
-var RandomBrain = function (agent) {
+var RandomBrain = function (agent, vertLikelihood, horizLikelihood) {
   this.agent = agent;
   this.possibleDecisions = [50, 120, 150, 200];
-  this.horizLikelihood = 1.0;
-  this.vertLikelihood = 0.2;
+  this.horizLikelihood = horizLikelihood || 1.0;
+  this.vertLikelihood = (vertLikelihood == 0) ? vertLikelihood : (vertLikelihood || 0.2);
   this.nextDecision = 0;
 };
 
