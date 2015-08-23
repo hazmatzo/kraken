@@ -10,6 +10,11 @@ Game.init = function() {
   Game.resize();
   createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
+  Game.fishes = _(5).times(function(n) {
+    return new SwimmyFish(50 + 50 * n, 50, 50 * n); });
+  _.each(Game.fishes, function(fish) {
+    Game.currentStage.addChild(fish.shape);
+  });
   $(window).keydown(Game.onKeydown);
   $(window).keyup(Game.onKeyup);
   $(window).resize(Game.resize);
@@ -17,6 +22,9 @@ Game.init = function() {
 
 Game.tick = function(event) {
   Game.kraken.update(event);
+  _.each(Game.fishes, function(fish) {
+    fish.update(event);
+  });
   Game.currentStage.update();
 };
 
