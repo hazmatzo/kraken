@@ -12,12 +12,14 @@ SwimmyFish.prototype.preUpdate = function(event) {
 };
 
 SwimmyFish.prototype.createShape = function(x, y) {
-  var circle = new createjs.Shape();
-  circle.graphics.beginFill('Green').drawCircle(30, 30, 30);
-  circle.regX = 30;
-  circle.regY = 30;
+  var img = new Image(); 
+  img.src = 'images/silver-fish.png';       
+  var circle = new createjs.Bitmap(img);  
+  circle.image.scaleX = -1;
+  circle.regX = circle.image.width / 2;
+  circle.regY = circle.image.height / 2;
   circle.x = x;
   circle.y = y;
-  circle.setBounds(0, 0, 60, 60);
+  circle.setBounds(0, 0, 80, 80);
   return circle;
 };
