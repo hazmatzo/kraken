@@ -2,13 +2,16 @@ Boat = function(x) {
   this.x = x;
   this.y = Game.water.waterLine - (0.2 * Game.water.waterLine);
   this.shape = this.createBoatShape(this.x, this.y);
+  this.brain = new RandomBrain(this);
 };
 
 Boat.prototype = new Agent();
 
+Boat.prototype.preUpdate = function(event) {
+  this.brain.update(event);
+};
+
 Boat.prototype.createBoatShape = function(x, y) {
-  console.log("x", x);
-  console.log("y", y);
   var boat = new createjs.Shape();
   // Coordinates are the center (0,0)
   boat.x = x;

@@ -31,6 +31,9 @@ Game.tick = function(event) {
   _.each(Game.seaManager.fishes, function(fish) {
     fish.update(event);
   });
+  _.each(Game.seaManager.boats, function(boat) {
+    boat.update(event);
+  })
   Game.currentStage.update();
 };
 
