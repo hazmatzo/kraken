@@ -1,35 +1,10 @@
 var Kraken = function() {
-  var that = this;
-  this.x = 100.0;
-  this.y = 100.0;
-  this.velX = 0;
-  this.velY = 0;
-  this.speed = 3.0;
-  this.scale = 1.0;
-  this.shape = this.createKrakenShape(this.x, this.y);
+  this.x = 100;
+  this.y = 100;
+  this.shape = this.createShape(this.x, this.y);
 };
 
-Kraken.prototype.update = function(event) {
-  var newX = this.x + Game.timeToDist(this.velX, event.delta);
-  var newY = this.y + Game.timeToDist(this.velY, event.delta);
-  if (!this.willBeOutOfBounds(newX, newY)) {
-    this.x = newX;
-    this.y = newY; 
-    this.shape.x = this.x;
-    this.shape.y = this.y;
-    this.shape.scaleX = this.scale;
-    this.shape.scaleY = this.scale;
-  }
-};
-
-Kraken.prototype.willBeOutOfBounds = function(newX, newY) {
-  var currentBounds = this.shape.getTransformedBounds();
-  var newLeft = newX - (currentBounds.width / 2);
-  var newUp = newY - (currentBounds.height / 2);
-  var newRight = newX + (currentBounds.width / 2);
-  var newDown = newY + (currentBounds.height / 2);
-  return newLeft < 0 || newUp < 0 || newRight > Game.getWidth() || newDown > Game.getHeight();
-};
+Kraken.prototype = new Agent();
 
 Kraken.prototype.startLeft = function() {
   this.velX = -this.speed * 1.0;
@@ -63,13 +38,13 @@ Kraken.prototype.stopDown = function() {
   this.velY = Math.min(0.0, this.velY);
 };
 
-Kraken.prototype.createKrakenShape = function(x, y) {
+Kraken.prototype.createShape = function(x, y) {
   var circle = new createjs.Shape();
-  circle.graphics.beginFill('DeepSkyBlue').drawCircle(25, 25, 50);
-  circle.regX = 25;
-  circle.regY = 25;
   circle.x = x;
   circle.y = y;
+  circle.graphics.beginFill('DeepSkyBlue').drawCircle(50, 50, 50);
+  circle.regX = 50;
+  circle.regY = 50;
   circle.setBounds(0, 0, 100, 100);
   return circle;
 };

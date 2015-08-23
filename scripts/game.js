@@ -1,13 +1,13 @@
 var Game = {};
 
 Game.init = function() {
-	Game.setup();
-	Game.draw();
+  Game.setup();
+  Game.draw();
   Game.currentStage.update();
 };
 
 Game.setup = function() {
-	Game.currentStage = new createjs.Stage('mainCanvas');
+  Game.currentStage = new createjs.Stage('mainCanvas');
   Game.keyboard = new Keyboard();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
@@ -95,10 +95,10 @@ Game.getHeight = function() {
  * When the window is resized, resize the canvas.
  */
 Game.resize = function() {
-	Game.currentStage.canvas.width = window.innerWidth;
-	Game.currentStage.canvas.height = window.innerHeight;
-	if (Game.water) {
+  Game.currentStage.canvas.width = window.innerWidth;
+  Game.currentStage.canvas.height = window.innerHeight;
+  if (Game.water) {
     Game.water.setSize();
-	}
+  }
 };
 

@@ -24,4 +24,4 @@ RandomBrain.prototype.makeDecision = function() {
   if (this.vertLikelihood >= Math.random()) {
     this.agent.velY = this.agent.speed * _.random(-1,1);
   }
-}
+};
