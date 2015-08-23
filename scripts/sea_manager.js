@@ -1,11 +1,24 @@
+var MAX_FISH = 20;
+
 var SeaManager = function() {
   this.agents = [];
   this.addKraken();
   this.fishes = [];
+  this.nextFishAdded = 0;
   var that = this;
   _(5).times(function(n) {
     that.addFish(50 + 50 * n, 50, 50 * n);
   });
+};
+
+
+SeaManager.prototype.randomlyAddFish = function() {
+  var time = createjs.Ticker.getTime(); 
+  if (this.nextFishAdded < time && this.fishes.length < MAX_FISH) {
+    this.nextFishAdded = time + 
+      _.sample([500, 2000, 5000]);
+    this.addFish(100, 100);
+  }
 };
 
 SeaManager.prototype.addKraken = function() {

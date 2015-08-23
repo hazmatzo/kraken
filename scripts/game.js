@@ -9,7 +9,6 @@ Game.init = function() {
 Game.setup = function() {
 	Game.currentStage = new createjs.Stage('mainCanvas');
   Game.keyboard = new Keyboard();
-  Game.seaManager = new SeaManager();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
@@ -22,10 +21,12 @@ Game.setup = function() {
 Game.draw = function() {
   Game.water = new Water();
   Game.currentStage.addChild(Game.water.shape);
+  Game.seaManager = new SeaManager();
 };
 
 Game.tick = function(event) {
   Game.seaManager.kraken.update(event);
+  Game.seaManager.randomlyAddFish();
   _.each(Game.seaManager.fishes, function(fish) {
     fish.update(event);
   });
@@ -40,16 +41,16 @@ Game.onKeydown = function(event) {
   var preventDefault = true;
   switch(event.which) {
     case Game.keyboard.LEFT:
-      Game.kraken.startLeft();
+      Game.seaManager.kraken.startLeft();
       break;
     case Game.keyboard.RIGHT:
-      Game.kraken.startRight();
+      Game.seaManager.kraken.startRight();
       break;
     case Game.keyboard.UP:
-      Game.kraken.startUp();
+      Game.seaManager.kraken.startUp();
       break;
     case Game.keyboard.DOWN:
-      Game.kraken.startDown();
+      Game.seaManager.kraken.startDown();
       break;
     default:
       preventDefault = false;
@@ -63,16 +64,16 @@ Game.onKeyup = function(event) {
   var preventDefault = true;
   switch(event.which) {
     case Game.keyboard.LEFT:
-      Game.kraken.stopLeft();
+      Game.seaManager.kraken.stopLeft();
       break;
     case Game.keyboard.RIGHT:
-      Game.kraken.stopRight();
+      Game.seaManager.kraken.stopRight();
       break;
     case Game.keyboard.UP:
-      Game.kraken.stopUp();
+      Game.seaManager.kraken.stopUp();
       break;
     case Game.keyboard.DOWN:
-      Game.kraken.stopDown();
+      Game.seaManager.kraken.stopDown();
       break;
     default:
       preventDefault = false;

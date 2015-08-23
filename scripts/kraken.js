@@ -13,7 +13,7 @@ Kraken.prototype.update = function(event) {
   var newX = this.x + Game.timeToDist(this.velX, event.delta);
   var newY = this.y + Game.timeToDist(this.velY, event.delta);
   if (!this.willBeOutOfBounds(newX, newY)) {
-    this.x = newX; 
+    this.x = newX;
     this.y = newY; 
     this.shape.x = this.x;
     this.shape.y = this.y;

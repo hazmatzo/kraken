@@ -4,16 +4,16 @@ var RandomBrain = function (agent) {
   this.horizLikelihood = 1.0;
   this.vertLikelihood = 0.2;
   this.nextDecision = 0;
-}
+};
 
 RandomBrain.prototype.update = function(event) {
-  var ticks = createjs.Ticker.getTicks(); 
+  var ticks = createjs.Ticker.getTicks();
   if (this.nextDecision < ticks) {
-    this.nextDecision = ticks + 
+    this.nextDecision = ticks +
       _.sample(this.possibleDecisions);
     this.makeDecision();
   }
-}
+};
 
 RandomBrain.prototype.makeDecision = function() {
   this.agent.velX = 0.0;
