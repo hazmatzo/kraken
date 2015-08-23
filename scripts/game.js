@@ -1,4 +1,4 @@
-var Game = function () {};
+var Game = {};
 
 Game.init = function() {
 	Game.setup();
@@ -9,6 +9,7 @@ Game.init = function() {
 Game.setup = function() {
 	Game.currentStage = new createjs.Stage('mainCanvas');
   Game.keyboard = new Keyboard();
+  Game.agentManager = new AgentManager();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
@@ -21,18 +22,11 @@ Game.setup = function() {
 Game.draw = function() {
   Game.water = new Water();
   Game.currentStage.addChild(Game.water.shape);
-  Game.kraken = new Kraken();
-  Game.currentStage.addChild(Game.kraken.shape);
-  Game.fishes = _(5).times(function(n) {
-    return new SwimmyFish(50 + 50 * n, 50, 50 * n); });
-  _.each(Game.fishes, function(fish) {
-    Game.currentStage.addChild(fish.shape);
-  });
 };
 
 Game.tick = function(event) {
-  Game.kraken.update(event);
-  _.each(Game.fishes, function(fish) {
+  Game.agentManager.kraken.update(event);
+  _.each(Game.agentManager.fishes, function(fish) {
     fish.update(event);
   });
   Game.currentStage.update();
