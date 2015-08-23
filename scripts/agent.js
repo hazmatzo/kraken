@@ -6,7 +6,7 @@ var Agent = function () {
   this.speed = 1.0;
   this.scale = 1.0;
   this.visible = true;
-  this.disappearance = { nextReappearance: 0 };
+  this.disappearance = { nextAppearance: 0 };
 };
 
 Agent.prototype.preUpdate = function(event) {
@@ -50,24 +50,23 @@ Agent.prototype.willBeOutOfBounds = function(newX, newY) {
   return newLeft < 0 || newUp < 0 || newRight > Game.getWidth() || newDown > Game.getHeight();
 };
 
-Agent.updateVisibility(event) {
+Agent.prototype.updateVisibility = function(event) {
   if (!this.visible && this.disappearance &&
-      this.disappearance.nextReappearance < currentjs.Ticker.getTime()) {
+      this.disappearance.nextAppearance < createjs.Ticker.getTime()) {
     this.visible = true;
   }
   this.shape.visible = this.visible;
 };
 
-Agent.prototype.disappearForNSeconds(n) {
+Agent.prototype.disappearForNSeconds = function(n) {
   this.visible = false;
   if (!this.disappearance) {
     this.disappearance = {};
   }
-  this.disappearance.nextAppearance = createjs.Ticker.getTime() +
-      Math.max(n,0) * 1000;
+  this.disappearance.nextAppearance = createjs.Ticker.getTime() + Math.max(n,0) * 1000;
 };
 
-Agent.prototype.getCollision(agent) {
+Agent.prototype.getCollision = function(agent) {
   if (agent.getId() == this.getId()) {
     return false;
   }

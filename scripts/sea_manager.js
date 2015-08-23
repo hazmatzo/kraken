@@ -8,19 +8,25 @@ var SeaManager = function() {
   this.boats = [];
   var that = this;
   _(5).times(function(n) {
-    that.addFish(50 + 50 * n, 50 + 50 * n);
+    that.addFish(50 + 100 * n, 50 + 100 * n);
   });
   _(2).times(function(n) {
     that.addBoat(50 + 100 * n)
   });
 };
 
+SeaManager.prototype.getRandomUnderwaterEdgePoint = function() {
+  return {x:_.sample([41, Game.getWidth() - 41]),
+          y:_.random(Game.water.waterLine + 20, Game.getHeight() - 20)};
+}
+
 SeaManager.prototype.randomlyAddFish = function() {
   var time = createjs.Ticker.getTime(); 
   if (this.nextFishAdded < time && this.fishes.length < MAX_FISH) {
     this.nextFishAdded = time + 
       _.sample([500, 2000, 5000]);
-    this.addFish(100, 100);
+    var point = this.getRandomUnderwaterEdgePoint();
+    this.addFish(point.x, point.y);
   }
 };
 
@@ -28,12 +34,13 @@ SeaManager.prototype.checkCollisions = function() {
   var that = this;
   for (var i = 0; i < this.fishes.length - 1; i++) {
     for (var j = i + 1; j < this.fishes.length; j++) {
-      if (this.fishes[i].getCollision(this.fishes[j]) {
-        this.fishes[i].disappearForNSeconds(2);
+      if (this.fishes[i].getCollision(this.fishes[j])) {
+        this.fishes[i].disappearForNSeconds(.5);
+        this.fishes[j].disappearForNSeconds(.5);
       }
     }
   }
-}
+};
 
 SeaManager.prototype.addKraken = function() {
   this.kraken = new Kraken();
