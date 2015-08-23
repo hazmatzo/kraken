@@ -36,8 +36,8 @@ Agent.prototype.updateMovement = function(event) {
     this.y = newY; 
     this.shape.x = this.x;
     this.shape.y = this.y;
-    this.shape.scaleX = this.scale;
-    this.shape.scaleY = this.scale;
+    // this.shape.scaleX = this.scale;
+    // this.shape.scaleY = this.scale;
   }
 };
 

@@ -12,12 +12,23 @@ SwimmyFish.prototype.preUpdate = function(event) {
 };
 
 SwimmyFish.prototype.createShape = function(x, y) {
-  var circle = new createjs.Shape();
-  circle.graphics.beginFill('Green').drawCircle(30, 30, 30);
-  circle.regX = 30;
-  circle.regY = 30;
-  circle.x = x;
-  circle.y = y;
-  circle.setBounds(0, 0, 60, 60);
-  return circle;
+  var data = {
+    images: ['images/silver-fish.png'],
+    frames: {width:728, height:177},
+    animations: {
+        swim:0
+    }
+  };
+  var spriteSheet = new createjs.SpriteSheet(data);
+  var sprite = new createjs.Sprite(spriteSheet, 'swim');
+  var width = data.frames.width;
+  var height = data.frames.height;
+  sprite.setBounds(0, 0, width, height);
+  sprite.regX = width/2;
+  sprite.regY = height/2;
+  sprite.x = x;
+  sprite.y = y;
+  sprite.scaleX = 80 / width;
+  sprite.scaleY = sprite.scaleX;
+  return sprite;
 };

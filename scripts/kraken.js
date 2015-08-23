@@ -39,12 +39,12 @@ Kraken.prototype.stopDown = function() {
 };
 
 Kraken.prototype.createShape = function(x, y) {
-  var circle = new createjs.Shape();
-  circle.x = x;
-  circle.y = y;
-  circle.graphics.beginFill('DeepSkyBlue').drawCircle(50, 50, 50);
-  circle.regX = 50;
-  circle.regY = 50;
-  circle.setBounds(0, 0, 100, 100);
-  return circle;
+  var kraken = new createjs.Shape();
+  kraken.x = x;
+  kraken.y = y;
+  kraken.graphics.beginFill('DeepSkyBlue').drawCircle(0, 0, 50);
+  kraken.regX = 0;
+  kraken.regY = 0;
+  kraken.setBounds(-50, -50, 50, 50);
+  return kraken;
 };
