@@ -7,9 +7,9 @@ var RandomBrain = function (agent) {
 };
 
 RandomBrain.prototype.update = function(event) {
-  var ticks = createjs.Ticker.getTicks(); 
+  var ticks = createjs.Ticker.getTicks();
   if (this.nextDecision < ticks) {
-    this.nextDecision = ticks + 
+    this.nextDecision = ticks +
       _.sample(this.possibleDecisions);
     this.makeDecision();
   }
