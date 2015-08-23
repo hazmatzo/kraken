@@ -69,6 +69,15 @@ Game.onKeyup = function(event) {
     event.preventDefault();
   }
 };
+
+Game.getWidth = function() {
+  return Game.currentStage.canvas.width;
+};
+
+Game.getHeight = function() {
+  return Game.currentStage.canvas.height;
+};
+
 /**
  * When the window is resized, resize the canvas.
  */
