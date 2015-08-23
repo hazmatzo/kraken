@@ -1,23 +1,31 @@
 var Game = function () {};
 
 Game.init = function() {
-  Game.currentStage = new createjs.Stage('mainCanvas');
-  Game.kraken = new Kraken();
-  Game.keyboard = new Keyboard();
-  Game.currentStage.addChild(Game.kraken.shape);
+	Game.setup();
+	Game.draw();
   Game.currentStage.update();
+};
+
+Game.setup = function() {
+	Game.currentStage = new createjs.Stage('mainCanvas');
+  Game.keyboard = new Keyboard();
   Game.speed = 20.0; // pixels per second
-  Game.resize();
   createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
+  $(window).keydown(Game.onKeydown);
+  $(window).keyup(Game.onKeyup);
+  $(window).resize(Game.resize);
+  Game.resize();
+};
+
+Game.draw = function() {
+  Game.kraken = new Kraken();
+  Game.currentStage.addChild(Game.kraken.shape);
   Game.fishes = _(5).times(function(n) {
     return new SwimmyFish(50 + 50 * n, 50, 50 * n); });
   _.each(Game.fishes, function(fish) {
     Game.currentStage.addChild(fish.shape);
   });
-  $(window).keydown(Game.onKeydown);
-  $(window).keyup(Game.onKeyup);
-  $(window).resize(Game.resize);
 };
 
 Game.tick = function(event) {
