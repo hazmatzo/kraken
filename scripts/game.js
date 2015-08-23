@@ -27,6 +27,7 @@ Game.draw = function() {
 Game.tick = function(event) {
   Game.seaManager.kraken.update(event);
   Game.seaManager.randomlyAddFish();
+  Game.seaManager.checkCollisions();
   _.each(Game.seaManager.fishes, function(fish) {
     fish.update(event);
   });

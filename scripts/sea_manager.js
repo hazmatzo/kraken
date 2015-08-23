@@ -11,7 +11,6 @@ var SeaManager = function() {
   });
 };
 
-
 SeaManager.prototype.randomlyAddFish = function() {
   var time = createjs.Ticker.getTime(); 
   if (this.nextFishAdded < time && this.fishes.length < MAX_FISH) {
@@ -20,6 +19,17 @@ SeaManager.prototype.randomlyAddFish = function() {
     this.addFish(100, 100);
   }
 };
+
+SeaManager.prototype.checkCollisions = function() {
+  var that = this;
+  for (var i = 0; i < this.fishes.length - 1; i++) {
+    for (var j = i + 1; j < this.fishes.length; j++) {
+      if (this.fishes[i].getCollision(this.fishes[j]) {
+        this.fishes[i].disappearForNSeconds(2);
+      }
+    }
+  }
+}
 
 SeaManager.prototype.addKraken = function() {
   this.kraken = new Kraken();
