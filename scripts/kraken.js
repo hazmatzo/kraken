@@ -47,7 +47,7 @@ Kraken.prototype.startDown = function() {
 };
 
 Kraken.prototype.stopDown = function() {
-  this.velY = Math.max(0.0, this.velY);
+  this.velY = Math.min(0.0, this.velY);
 };
 
 Kraken.prototype.createKrakenShape = function(x, y) {
