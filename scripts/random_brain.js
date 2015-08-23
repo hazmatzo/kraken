@@ -24,4 +24,10 @@ RandomBrain.prototype.makeDecision = function() {
   if (this.vertLikelihood >= Math.random()) {
     this.agent.velY = this.agent.speed * _.random(-1,1);
   }
+  if (this.agent.velX <= 0) {
+    this.agent.shape.scaleX = -1 * Math.abs(this.agent.shape.scaleX);
+  }
+  else {
+    this.agent.shape.scaleX = Math.abs(this.agent.shape.scaleX);
+  }
 };
