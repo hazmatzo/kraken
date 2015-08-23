@@ -6,19 +6,11 @@ var SwimmyFish = function (x, y) {
   this.speed = 5.0;
   this.scale = 1.0;
   this.shape = this.createShape(this.x, this.y);
-  this.possibleDecisions = [50, 120, 150, 200];
-  this.horizLikelihood = 1.0;
-  this.vertLikelihood = 0.2;
-  this.nextDecision = 0;
+  this.brain = new RandomBrain(this);
 };
 
 SwimmyFish.prototype.update = function(event) {
-  var ticks = createjs.Ticker.getTicks(); 
-  if (this.nextDecision < ticks) {
-    this.nextDecision = ticks + 
-      _.sample(this.possibleDecisions);
-    this.makeDecision();
-  }
+  this.brain.update(event);
   this.x += Game.timeToDist(this.velX, event.delta);
   this.y += Game.timeToDist(this.velY, event.delta);
   this.x = Math.min(Game.getWidth(), Math.max(0, this.x));
@@ -38,14 +30,3 @@ SwimmyFish.prototype.createShape = function(x, y) {
   circle.y = y;
   return circle;
 };
-
-SwimmyFish.prototype.makeDecision = function() {
-  this.velX = 0.0;
-  this.velY = 0.0;
-  if (this.horizLikelihood >= Math.random()) {
-    this.velX = this.speed * _.sample([1, -1]);
-  }
-  if (this.vertLikelihood >= Math.random()) {
-    this.velY = this.speed * _.random(-1,1);
-  }
-}
