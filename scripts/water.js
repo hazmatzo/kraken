@@ -1,5 +1,6 @@
 var Water = function() {
- this.shape = this.createShape();
+  this.waterLine = 100;
+  this.shape = this.createShape();
 };
 
 Water.prototype.createShape = function() {
@@ -8,10 +9,14 @@ Water.prototype.createShape = function() {
   rectangle.regX = 0;
   rectangle.regY = 100;
   rectangle.x = 0;
-  rectangle.y = 100;
+  rectangle.y = waterline;
   return rectangle;
 };
 
 Water.prototype.setSize = function() {
   this.shape.graphics.drawRect(0, 100, Game.getWidth(), Game.getHeight());
 };
+
+// Water.prototype.getWaterLine = function() {
+//   return this.shape.y;
+// }

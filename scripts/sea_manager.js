@@ -5,12 +5,15 @@ var SeaManager = function() {
   this.addKraken();
   this.fishes = [];
   this.nextFishAdded = 0;
+  this.boats = [];
   var that = this;
   _(5).times(function(n) {
-    that.addFish(50 + 50 * n, 50, 50 * n);
+    that.addFish(50 + 50 * n, 50 + 50 * n);
+  });
+  _(2).times(function(n) {
+    that.addBoat(400 + 50 * n)
   });
 };
-
 
 SeaManager.prototype.randomlyAddFish = function() {
   var time = createjs.Ticker.getTime(); 
@@ -32,4 +35,11 @@ SeaManager.prototype.addFish = function(x, y) {
   this.fishes.push(fish);
   this.agents.push(fish);
   Game.currentStage.addChild(fish.shape);
+};
+
+SeaManager.prototype.addBoat = function(x) {
+  var boat = new Boat(x);
+  this.boats.push(boat);
+  this.agents.push(this.kraken);
+  Game.currentStage.addChild(this.kraken.shape);
 };
