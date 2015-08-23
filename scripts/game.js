@@ -19,6 +19,8 @@ Game.setup = function() {
 };
 
 Game.draw = function() {
+  Game.water = new Water();
+  Game.currentStage.addChild(Game.water.shape);
   Game.kraken = new Kraken();
   Game.currentStage.addChild(Game.kraken.shape);
   Game.fishes = _(5).times(function(n) {
@@ -100,5 +102,8 @@ Game.getHeight = function() {
 Game.resize = function() {
 	Game.currentStage.canvas.width = window.innerWidth;
 	Game.currentStage.canvas.height = window.innerHeight;
+	if (Game.water) {
+    Game.water.setSize();
+	}
 };
 
