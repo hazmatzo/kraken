@@ -4,7 +4,7 @@ var RandomBrain = function (agent) {
   this.horizLikelihood = 1.0;
   this.vertLikelihood = 0.2;
   this.nextDecision = 0;
-}
+};
 
 RandomBrain.prototype.update = function(event) {
   var ticks = createjs.Ticker.getTicks(); 
@@ -13,7 +13,7 @@ RandomBrain.prototype.update = function(event) {
       _.sample(this.possibleDecisions);
     this.makeDecision();
   }
-}
+};
 
 RandomBrain.prototype.makeDecision = function() {
   this.agent.velX = 0.0;
@@ -24,4 +24,4 @@ RandomBrain.prototype.makeDecision = function() {
   if (this.vertLikelihood >= Math.random()) {
     this.agent.velY = this.agent.speed * _.random(-1,1);
   }
-}
+};

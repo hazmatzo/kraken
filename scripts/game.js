@@ -1,13 +1,13 @@
 var Game = function () {};
 
 Game.init = function() {
-	Game.setup();
-	Game.draw();
+  Game.setup();
+  Game.draw();
   Game.currentStage.update();
 };
 
 Game.setup = function() {
-	Game.currentStage = new createjs.Stage('mainCanvas');
+  Game.currentStage = new createjs.Stage('mainCanvas');
   Game.keyboard = new Keyboard();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
@@ -24,7 +24,7 @@ Game.draw = function() {
   Game.kraken = new Kraken();
   Game.currentStage.addChild(Game.kraken.shape);
   Game.fishes = _(5).times(function(n) {
-    return new SwimmyFish(50 + 50 * n, 50, 50 * n); });
+    return new SwimmyFish(50 + 50 * n, 50 + 50 * n); });
   _.each(Game.fishes, function(fish) {
     Game.currentStage.addChild(fish.shape);
   });
@@ -100,10 +100,10 @@ Game.getHeight = function() {
  * When the window is resized, resize the canvas.
  */
 Game.resize = function() {
-	Game.currentStage.canvas.width = window.innerWidth;
-	Game.currentStage.canvas.height = window.innerHeight;
-	if (Game.water) {
+  Game.currentStage.canvas.width = window.innerWidth;
+  Game.currentStage.canvas.height = window.innerHeight;
+  if (Game.water) {
     Game.water.setSize();
-	}
+  }
 };
 
