@@ -7,7 +7,7 @@ var SeaManager = function() {
   this.nextFishAdded = 0;
   var that = this;
   _(5).times(function(n) {
-    that.addFish(50 + 50 * n, 50, 50 * n);
+    that.addFish(50 + 50 * n, 50 + 50 * n);
   });
 };
 
