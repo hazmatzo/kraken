@@ -11,7 +11,7 @@ var SeaManager = function() {
     that.addFish(50 + 50 * n, 50 + 50 * n);
   });
   _(2).times(function(n) {
-    that.addBoat(400 + 50 * n)
+    that.addBoat(20 + 50 * n)
   });
 };
 
@@ -40,6 +40,6 @@ SeaManager.prototype.addFish = function(x, y) {
 SeaManager.prototype.addBoat = function(x) {
   var boat = new Boat(x);
   this.boats.push(boat);
-  this.agents.push(this.kraken);
-  Game.currentStage.addChild(this.kraken.shape);
+  this.agents.push(boat);
+  Game.currentStage.addChild(boat.shape);
 };

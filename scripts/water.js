@@ -9,7 +9,7 @@ Water.prototype.createShape = function() {
   rectangle.regX = 0;
   rectangle.regY = 100;
   rectangle.x = 0;
-  rectangle.y = waterline;
+  rectangle.y = this.waterline;
   return rectangle;
 };
 

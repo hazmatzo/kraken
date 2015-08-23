@@ -4,6 +4,7 @@ Game.init = function() {
   Game.setup();
   Game.draw();
   Game.currentStage.update();
+  createjs.Ticker.addEventListener("tick", Game.tick);
 };
 
 Game.setup = function() {
@@ -11,7 +12,6 @@ Game.setup = function() {
   Game.keyboard = new Keyboard();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
-  createjs.Ticker.addEventListener("tick", Game.tick);
   $(window).keydown(Game.onKeydown);
   $(window).keyup(Game.onKeyup);
   $(window).resize(Game.resize);
