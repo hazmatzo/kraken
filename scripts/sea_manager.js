@@ -1,4 +1,4 @@
-var AgentManager = function() {
+var SeaManager = function() {
   this.agents = [];
   this.addKraken();
   this.fishes = [];
@@ -8,13 +8,13 @@ var AgentManager = function() {
   });
 };
 
-AgentManager.prototype.addKraken = function() {
+SeaManager.prototype.addKraken = function() {
   this.kraken = new Kraken();
   this.agents.push(this.kraken);
   Game.currentStage.addChild(this.kraken.shape);
 };
 
-AgentManager.prototype.addFish = function(x, y) {
+SeaManager.prototype.addFish = function(x, y) {
   var fish = new SwimmyFish(x, y);
   this.fishes.push(fish);
   this.agents.push(fish);

@@ -9,7 +9,7 @@ Game.init = function() {
 Game.setup = function() {
 	Game.currentStage = new createjs.Stage('mainCanvas');
   Game.keyboard = new Keyboard();
-  Game.agentManager = new AgentManager();
+  Game.seaManager = new SeaManager();
   Game.speed = 20.0; // pixels per second
   createjs.Ticker.framerate = 60;
   createjs.Ticker.addEventListener("tick", Game.tick);
@@ -25,8 +25,8 @@ Game.draw = function() {
 };
 
 Game.tick = function(event) {
-  Game.agentManager.kraken.update(event);
-  _.each(Game.agentManager.fishes, function(fish) {
+  Game.seaManager.kraken.update(event);
+  _.each(Game.seaManager.fishes, function(fish) {
     fish.update(event);
   });
   Game.currentStage.update();
