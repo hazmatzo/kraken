@@ -11,7 +11,7 @@ var SeaManager = function() {
     that.addFish(50 + 50 * n, 50 + 50 * n);
   });
   _(2).times(function(n) {
-    that.addBoat(20 + 50 * n)
+    that.addBoat(50 + 100 * n)
   });
 };
 
