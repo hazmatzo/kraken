@@ -13,6 +13,7 @@ var Kraken = function() {
   this.y = 100;
   this.shape = this.createShape(this.x, this.y);
   this.speed = 5.0;
+  this.minSize = 2.0;
   this.setAgentSize(2);
 };
 
