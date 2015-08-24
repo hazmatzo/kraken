@@ -9,7 +9,7 @@ var Agent = function () {
   this.scaleFactorX = 1.0;
   this.size = 1.0;
   this.visible = true;
-  this.maxGrowthFactor = 1.1;
+  this.maxGrowthFactor = 1.25;
   this.disappearance = { nextAppearance: 0 };
 };
 
