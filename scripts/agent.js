@@ -1,10 +1,3 @@
-var AGENT_GLOBALS = {
-  debounces: {
-    shrink: 2000;
-    appear: 500;
-  }
-};
-
 var Agent = function () {
   this.x = 0;
   this.y = 0;
@@ -29,11 +22,17 @@ Agent.prototype.preUpdate = function(event) {
 Agent.prototype.postUpdate = function(event) {
 };
 
+Agent.prototype.getDebounceValues = function() {
+  return {
+    shrink: 2000,
+    appear: 500
+  };
+};
 
 Agent.prototype.getBounds = function() {
   return {left: 0, right: Game.getWidth(),
       top: Game.water.waterLine, bottom: Game.getHeight()};
-}
+};
 
 Agent.prototype.getId = function () {
   return this.shape.id;
@@ -69,13 +68,13 @@ Agent.prototype.updateMovement = function(event) {
 Agent.prototype.updateShape = function() {
   this.shape.x = this.x;
   this.shape.y = this.y;
-}
+};
 
 Agent.prototype.moveInBounds = function() {
   var point = this.closestPointInBounds(this.x, this.y);
   this.x = point.x;
   this.y = point.y;
-}
+};
 
 Agent.prototype.closestPointInBounds = function(x, y) {
   var bounds = this.getBounds();
@@ -84,7 +83,7 @@ Agent.prototype.closestPointInBounds = function(x, y) {
   var halfHeight = currentBounds.height / 2;
   return { x:Math.min(Math.max(x, bounds.left + halfWidth), bounds.right - halfWidth),
            y:Math.min(Math.max(y, bounds.top + halfHeight), bounds.bottom - halfHeight) };
-}
+};
 
 Agent.prototype.willBeOutOfBounds = function(newX, newY) {
   var currentBounds = this.shape.getTransformedBounds();
@@ -100,10 +99,11 @@ Agent.prototype.willBeOutOfBounds = function(newX, newY) {
 };
 
 Agent.prototype.debounce = function(debounceName, length) {
-  if (this.debounces[debounceName] && this.debounces[debounceName] < createjs.Ticker.getTime()) {
+  var debounceValue = this.debounces[debounceName] || 0;
+  if (debounceValue < createjs.Ticker.getTime()) {
     var nextLength = length || 0;
     if (!nextLength) {
-      nextLength = AGENT_GLOBALS.debounces[debounceName] || 0;
+      nextLength = this.getDebounceValues()[debounceName] || 0;
     }
     this.debounces[debounceName] = createjs.Ticker.getTime() + nextLength;
     return true;
@@ -131,30 +131,37 @@ Agent.prototype.setAgentSize = function(size) {
 };
 
 Agent.prototype.eat = function(agent) {
-  if (agent.size < this.size / 2) {
+  if (agent.size <= this.size / 2) {
     this.grow(agent.size);
     return true;
-  } else if (agent.size > this.size && this.debounce("shrink") {
-    this.shrink();
+  } else if (agent.size > this.size) {
+    if (this.debounce("shrink")) {
+      this.shrink();
+    }
   }
   return false;
 };
 
 Agent.prototype.shrink = function() {
-  this.resize(this.size * this.shrinkFactor);
+  var newSize = this.size * this.shrinkFactor;
+  if (newSize < this.minSize) {
+    newSize = this.minSize;
+  }
+  this.resize(newSize);
 };
 
 Agent.prototype.grow = function(foodSize) {
   var newSize = Math.min(this.maxGrowthFactor * this.size,
       this.size + (foodSize / 2));
-  if (newSize >= 40) {
-    newSize = 40;
+  if (newSize >= this.maxSize) {
+    newSize = this.maxSize;
   }
   this.resize(newSize);
 };
 
 Agent.prototype.resize = function(newSize) {
   if (newSize != this.size) {
+    this.size = newSize;
     var sizeIncrease = newSize / this.startSize;
     this.scale = Math.sqrt(sizeIncrease);
     this.shape.scaleX = this.scale * this.scaleFactorX;
