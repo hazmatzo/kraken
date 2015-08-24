@@ -8,12 +8,12 @@ var KRAKEN_SPRITE_DATA = {
 
 var KRAKEN_SPRITE_SHEET = new createjs.SpriteSheet(KRAKEN_SPRITE_DATA);
 
-var Kraken = function() {
-  this.x = 100;
-  this.y = 100;
+var Kraken = function(x, y) {
+  this.x = x;
+  this.y = y;
   this.shape = this.createShape(this.x, this.y);
   this.speed = 5.0;
-  this.minSize = 2.0;
+  this.minSize = 1.2;
   this.setAgentSize(2);
 };
 

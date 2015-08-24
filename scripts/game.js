@@ -36,6 +36,12 @@ Game.tick = function(event) {
     boat.update(event);
   })
   Game.currentStage.update();
+  if (Game.seaManager.checkWinCondition()) {
+    console.log("You win");
+  }
+  if (Game.seaManager.checkLoseCondition()) {
+    console.log("You lose");
+  }
 };
 
 Game.timeToDist = function(vel, ms){

@@ -3,7 +3,8 @@ createjs.Sound.alternateExtensions= ["m4a"];
 createjs.Sound.registerSound("sounds/chomp1.m4a", "chomp1");
 
 var MAX_FISH = 20;
-var MAX_BOATS = 8;
+var MAX_BOATS = 4;
+var MAX_FISH_SIZE = 10;
 
 var SeaManager = function() {
   this.agents = {};
@@ -13,8 +14,9 @@ var SeaManager = function() {
   this.boats = {};
   this.nextBoatAdded = 0;
   var that = this;
-  _(5).times(function(n) {
-    that.addFish(50 + 100 * n, 50 + 100 * n);
+  _(6).times(function(n) {
+    var edgePoint = that.getRandomUnderwaterEdgePoint();
+    that.addFish(edgePoint.x, edgePoint.y);
   });
   _(2).times(function(n) {
     that.addBoat(200 + 100 * n);
@@ -84,13 +86,29 @@ SeaManager.prototype.removeAgent = function(agent) {
 
 
 SeaManager.prototype.addKraken = function() {
-  this.kraken = new Kraken();
+  this.kraken = new Kraken(Game.getWidth()/2, Game.getHeight()/2);
   this.agents[this.kraken.getId()] = this.kraken;
   Game.currentStage.addChild(this.kraken.shape);
 };
 
 SeaManager.prototype.addFish = function(x, y) {
-  var randomFishSize = _.random(1,5);
+  var that = this;
+  var edibleFish = _.reduce(this.fishes, function(memo, fish) {
+    return memo + (fish.size <= that.kraken.size * .8 ? 1 : 0);
+  }, 0);
+  var randomFishSize = Math.floor(this.kraken.size);
+  // Try to keep the average size of fish around the size of the kraken.
+  if (edibleFish >= _.size(this.fishes) / 2) {
+    var lowSize = Math.min(Math.ceil(this.kraken.size * 1.1), MAX_FISH_SIZE);
+    var highSize = Math.ceil(Math.min(3 * this.kraken.size, MAX_FISH_SIZE));
+    randomFishSize = _.random(lowSize, highSize);
+  } else {
+    // Make sure smaller fish are not too small.
+    var lowSize = Math.floor(Math.max(1, (this.kraken.size / 4)));
+    // Make sure smaller fish are edible!
+    var highSize = Math.max(Math.floor(this.kraken.size * .8), lowSize);
+    randomFishSize = _.random(lowSize, highSize);
+  }
   var fish = new SwimmyFish(x, y, randomFishSize);
   this.fishes[fish.getId()] = fish;
   this.agents[fish.getId()] = fish;
@@ -104,3 +122,11 @@ SeaManager.prototype.addBoat = function(x) {
   this.agents[boat.getId()] = boat;
   Game.currentStage.addChild(boat.shape);
 };
+
+SeaManager.prototype.checkLoseCondition = function() {
+  return this.kraken.size <= this.kraken.minSize;
+}
+
+SeaManager.prototype.checkWinCondition = function() {
+  return this.kraken.size >= this.kraken.maxSize;
+}
