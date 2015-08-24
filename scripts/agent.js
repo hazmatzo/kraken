@@ -108,7 +108,6 @@ Agent.prototype.debounce = function(debounceName, length) {
       nextLength = this.getDebounceValues()[debounceName] || 0;
     }
     this.debounces[debounceName] = createjs.Ticker.getTime() + nextLength;
-    console.log("NEXT DEBOUNCE for ", debounceName, "at", this.debounces[debounceName]);
     return true;
   }
   return false;
