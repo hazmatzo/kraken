@@ -36,8 +36,7 @@ SeaManager.prototype.randomlyAddBoats = function() {
   var time = createjs.Ticker.getTime();
   if (this.nextBoatAdded < time && _.size(this.boats) < MAX_BOATS) {
     this.nextBoatAdded = time + 
-      _.sample([500, 2000, 5000]);
-    console.log("Game width", Game.getWidth());
+      _.sample([2000, 5000, 10000, 20000]);
     var x_value = (Game.getWidth() - 100) ;
     this.addBoat(x_value);
   }
