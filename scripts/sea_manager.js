@@ -1,3 +1,7 @@
+//register sounds
+createjs.Sound.alternateExtensions= ["m4a"];
+createjs.Sound.registerSound("sounds/chomp1.m4a", "chomp1");
+
 var MAX_FISH = 20;
 
 var SeaManager = function() {
@@ -35,6 +39,8 @@ SeaManager.prototype.checkCollisions = function() {
   _.each(that.agents, function(agent) {
     if (that.kraken && that.kraken.getCollision(agent)) {
       if (that.kraken.eat(agent)) {
+        var instance = createjs.Sound.play("chomp1");
+        instance.volume = 0.5;
         that.removeAgent(agent);
       }
     }
