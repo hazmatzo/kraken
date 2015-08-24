@@ -1,4 +1,9 @@
+//register sounds
+createjs.Sound.alternateExtensions= ["m4a"];
+createjs.Sound.registerSound("sounds/chomp1.m4a", "chomp1");
+
 var MAX_FISH = 20;
+var MAX_BOATS = 8;
 
 var SeaManager = function() {
   this.agents = {};
@@ -6,6 +11,7 @@ var SeaManager = function() {
   this.fishes = {};
   this.nextFishAdded = 0;
   this.boats = {};
+  this.nextBoatAdded = 0;
   var that = this;
   _(5).times(function(n) {
     that.addFish(50 + 100 * n, 50 + 100 * n);
@@ -18,7 +24,7 @@ var SeaManager = function() {
 SeaManager.prototype.getRandomUnderwaterEdgePoint = function() {
   return {x:_.sample([41, Game.getWidth() - 41]),
           y:_.random(Game.water.waterLine + 20, Game.getHeight() - 20)};
-}
+};
 
 SeaManager.prototype.randomlyAddFish = function() {
   var time = createjs.Ticker.getTime(); 
@@ -30,21 +36,37 @@ SeaManager.prototype.randomlyAddFish = function() {
   }
 };
 
+SeaManager.prototype.randomlyAddBoats = function() {
+  var time = createjs.Ticker.getTime();
+  if (this.nextBoatAdded < time && _.size(this.boats) < MAX_BOATS) {
+    this.nextBoatAdded = time + 
+      _.sample([2000, 5000, 10000, 20000]);
+    var x_value = (Game.getWidth() - 100) ;
+    this.addBoat(x_value);
+  }
+};
+
 SeaManager.prototype.checkCollisions = function() {
   var that = this;
+  var toRemove = [];
   _.each(that.agents, function(agent) {
     if (that.kraken && that.kraken.getCollision(agent)) {
       if (that.kraken.eat(agent)) {
+        var instance = createjs.Sound.play("chomp1");
+        instance.volume = 0.5;
         that.removeAgent(agent);
+        toRemove.push(agent);
       }
     }
   });
   _.each(that.fishes, function(fish) {
     _.each(that.fishes, function(otherFish) {
       if (fish.getId() < otherFish.getId() && fish.getCollision(otherFish)) {
-        fish.brain.makeDecision();
       }
     });
+  });
+  _.each(toRemove, function(agent) {
+    that.removeAgent(agent);
   });
 };
 
@@ -68,7 +90,8 @@ SeaManager.prototype.addKraken = function() {
 };
 
 SeaManager.prototype.addFish = function(x, y) {
-  var fish = new SwimmyFish(x, y, 1);
+  var randomFishSize = _.random(1,5);
+  var fish = new SwimmyFish(x, y, randomFishSize);
   this.fishes[fish.getId()] = fish;
   this.agents[fish.getId()] = fish;
   Game.currentStage.addChild(fish.shape);

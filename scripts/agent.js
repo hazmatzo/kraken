@@ -10,7 +10,7 @@ var Agent = function () {
   this.scaleFactorX = 1.0;
   this.size = 1.0;
   this.visible = true;
-  this.maxGrowthFactor = 1.1;
+  this.maxGrowthFactor = 1.25;
   this.maxSize = 40.0;
   this.minSize = 1.0;
   this.debounces = {shrink: 0, appear: 0};
@@ -178,5 +178,11 @@ Agent.prototype.getCollision = function(agent) {
   if (agent.getId() == this.getId()) {
     return false;
   }
-  return ndmgr.checkPixelCollision(this.shape, agent.shape);
+  var collides = false;
+  try {
+    collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+  }
+  finally {
+    return collides;
+  }
 };
