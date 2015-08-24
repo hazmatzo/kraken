@@ -1,3 +1,13 @@
+var SWIMMY_FISH_SPRITE_DATA = {
+    images: ['images/silver-fish.png'],
+    frames: {width:728, height:177},
+    animations: {
+        swim:0
+    }
+  };
+
+var SWIMMY_FISH_SPRITE_SHEET = new createjs.SpriteSheet(SWIMMY_FISH_SPRITE_DATA);
+
 var SwimmyFish = function (x, y) {
   this.x = x;
   this.y = y;
@@ -16,17 +26,9 @@ SwimmyFish.prototype.onOutOfBounds = function(newX, newY) {
 };
 
 SwimmyFish.prototype.createShape = function(x, y) {
-  var data = {
-    images: ['images/silver-fish.png'],
-    frames: {width:728, height:177},
-    animations: {
-        swim:0
-    }
-  };
-  var spriteSheet = new createjs.SpriteSheet(data);
-  var sprite = new createjs.Sprite(spriteSheet, 'swim');
-  var width = data.frames.width;
-  var height = data.frames.height;
+  var sprite = new createjs.Sprite(SWIMMY_FISH_SPRITE_SHEET, 'swim');
+  var width = SWIMMY_FISH_SPRITE_DATA.frames.width;
+  var height = SWIMMY_FISH_SPRITE_DATA.frames.height;
   sprite.setBounds(0, 0, width, height);
   sprite.regX = width/2;
   sprite.regY = height/2;

@@ -33,15 +33,14 @@ Agent.prototype.update = function(event) {
   this.postUpdate(event);
 };
 
+Agent.prototype.onOutOfBounds = function(newX, newY) {
+
+};
+
 Agent.prototype.updateMovement = function(event) {
   var newX = this.x + Game.timeToDist(this.velX, event.delta);
   var newY = this.y + Game.timeToDist(this.velY, event.delta);
 
-  console.log("shape: ", this.getId(), this);
-  console.log("THINGIES: ", this.x, "y:", this.y);
-  console.log("UPDATE MOVEMENT: ", newX, "y:", newY);
-  console.log("VELS: ", this.velX, "y:", this.velY);
-  debugger;
   // Set new x and y anyway.
   if (this.willBeOutOfBounds(newX, newY)) {
     this.onOutOfBounds(newX, newY);
@@ -59,14 +58,12 @@ Agent.prototype.updateShape = function() {
 
 Agent.prototype.moveInBounds = function() {
   var point = this.closestPointInBounds(this.x, this.y);
-  console.log("CLOSEST POINT:", point);
   this.x = point.x;
   this.y = point.y;
 }
 
 Agent.prototype.closestPointInBounds = function(x, y) {
   var bounds = this.getBounds();
-  console.log("BOUNDS:", bounds);
   var currentBounds = this.shape.getTransformedBounds();
   var halfWidth = currentBounds.width / 2;
   var halfHeight = currentBounds.height / 2;
