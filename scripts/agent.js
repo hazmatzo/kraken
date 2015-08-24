@@ -1,3 +1,10 @@
+var AGENT_GLOBALS = {
+  debounces: {
+    shrink: 2000;
+    appear: 500;
+  }
+};
+
 var Agent = function () {
   this.x = 0;
   this.y = 0;
@@ -11,8 +18,9 @@ var Agent = function () {
   this.size = 1.0;
   this.visible = true;
   this.maxGrowthFactor = 1.1;
-  this.shrinkDebounce = 2000;
-  this.disappearance = { nextAppearance: 0 };
+  this.maxSize = 40.0;
+  this.minSize = 1.0;
+  this.debounces = {shrink: 0, appear: 0};
 };
 
 Agent.prototype.preUpdate = function(event) {
@@ -91,9 +99,20 @@ Agent.prototype.willBeOutOfBounds = function(newX, newY) {
       newUp < bounds.top || newDown > bounds.bottom;
 };
 
+Agent.prototype.debounce = function(debounceName, length) {
+  if (this.debounces[debounceName] && this.debounces[debounceName] < createjs.Ticker.getTime()) {
+    var nextLength = length || 0;
+    if (!nextLength) {
+      nextLength = AGENT_GLOBALS.debounces[debounceName] || 0;
+    }
+    this.debounces[debounceName] = createjs.Ticker.getTime() + nextLength;
+    return true;
+  }
+  return false;
+};
+
 Agent.prototype.updateVisibility = function(event) {
-  if (!this.visible && this.disappearance &&
-      this.disappearance.nextAppearance < createjs.Ticker.getTime()) {
+  if (!this.visible && this.debounce('appear')) {
     this.visible = true;
   }
   this.shape.visible = this.visible;
@@ -115,7 +134,7 @@ Agent.prototype.eat = function(agent) {
   if (agent.size < this.size / 2) {
     this.grow(agent.size);
     return true;
-  } else if (agent.size > this.size) {
+  } else if (agent.size > this.size && this.debounce("shrink") {
     this.shrink();
   }
   return false;
@@ -123,27 +142,29 @@ Agent.prototype.eat = function(agent) {
 
 Agent.prototype.shrink = function() {
   this.resize(this.size * this.shrinkFactor);
-}
+};
+
 Agent.prototype.grow = function(foodSize) {
   var newSize = Math.min(this.maxGrowthFactor * this.size,
       this.size + (foodSize / 2));
+  if (newSize >= 40) {
+    newSize = 40;
+  }
   this.resize(newSize);
 };
 
 Agent.prototype.resize = function(newSize) {
-  this.size = newSize;
-  var sizeIncrease = newSize / this.startSize;
-  this.scale = Math.sqrt(sizeIncrease);
-  this.shape.scaleX = this.scale * this.scaleFactorX;
-  this.shape.scaleY = this.scale * this.scaleFactorY;
+  if (newSize != this.size) {
+    var sizeIncrease = newSize / this.startSize;
+    this.scale = Math.sqrt(sizeIncrease);
+    this.shape.scaleX = this.scale * this.scaleFactorX;
+    this.shape.scaleY = this.scale * this.scaleFactorY;
+  }
 };
 
 Agent.prototype.disappearForNSeconds = function(n) {
   this.visible = false;
-  if (!this.disappearance) {
-    this.disappearance = {};
-  }
-  this.disappearance.nextAppearance = createjs.Ticker.getTime() + Math.max(n,0) * 1000;
+  this.debounce("appear", n * 1000);
 };
 
 Agent.prototype.getCollision = function(agent) {
