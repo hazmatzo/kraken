@@ -13,7 +13,8 @@ var Agent = function () {
   this.maxGrowthFactor = 1.25;
   this.maxSize = 40.0;
   this.minSize = 1.0;
-  this.debounces = {shrink: 0, appear: 0};
+  this.flashing = false;
+  this.debounces = {shrink: 0, appear: 0, flash: 0};
 };
 
 Agent.prototype.preUpdate = function(event) {
@@ -24,8 +25,9 @@ Agent.prototype.postUpdate = function(event) {
 
 Agent.prototype.getDebounceValues = function() {
   return {
-    shrink: 2000,
-    appear: 500
+    shrink: 3000,
+    appear: 3000,
+    flash: 100 
   };
 };
 
@@ -106,6 +108,7 @@ Agent.prototype.debounce = function(debounceName, length) {
       nextLength = this.getDebounceValues()[debounceName] || 0;
     }
     this.debounces[debounceName] = createjs.Ticker.getTime() + nextLength;
+    console.log("NEXT DEBOUNCE for ", debounceName, "at", this.debounces[debounceName]);
     return true;
   }
   return false;
@@ -114,7 +117,11 @@ Agent.prototype.debounce = function(debounceName, length) {
 Agent.prototype.updateVisibility = function(event) {
   if (!this.visible && this.debounce('appear')) {
     this.visible = true;
+    this.flashing = false;
+  } else if (this.flashing && this.debounce('flash')) {
+    this.visible = !this.visible;
   }
+
   this.shape.visible = this.visible;
 };
 
@@ -131,12 +138,16 @@ Agent.prototype.setAgentSize = function(size) {
 };
 
 Agent.prototype.eat = function(agent) {
-  if (agent.size <= this.size / 2) {
+  if (agent.size <= this.size * .75) {
     this.grow(agent.size);
     return true;
   } else if (agent.size > this.size) {
     if (this.debounce("shrink")) {
       this.shrink();
+      this.flashing = true;
+      this.debounce("flash");
+      this.visible = false;
+      this.debounce("appear");
     }
   }
   return false;

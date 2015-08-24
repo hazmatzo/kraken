@@ -68,7 +68,7 @@ Kraken.prototype.createShape = function(x, y) {
   sprite.y = y;
   sprite.scaleX = 150 / width;
   sprite.scaleY = sprite.scaleX;
-  sprite.scaleX = sprite.scaleX * .25;
-  sprite.scaleY = sprite.scaleY * .25;
+  sprite.scaleX = sprite.scaleX * .5;
+  sprite.scaleY = sprite.scaleY * .5;
   return sprite;
 };
