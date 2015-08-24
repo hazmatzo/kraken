@@ -143,5 +143,11 @@ Agent.prototype.getCollision = function(agent) {
   if (agent.getId() == this.getId()) {
     return false;
   }
-  return ndmgr.checkPixelCollision(this.shape, agent.shape);
+  var collides = false;
+  try {
+    collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+  }
+  finally {
+    return collides;
+  }
 };
