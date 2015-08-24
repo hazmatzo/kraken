@@ -48,12 +48,14 @@ SeaManager.prototype.randomlyAddBoats = function() {
 
 SeaManager.prototype.checkCollisions = function() {
   var that = this;
+  var toRemove = [];
   _.each(that.agents, function(agent) {
     if (that.kraken && that.kraken.getCollision(agent)) {
       if (that.kraken.eat(agent)) {
         var instance = createjs.Sound.play("chomp1");
         instance.volume = 0.5;
         that.removeAgent(agent);
+        toRemove.push(agent);
       }
     }
   });
@@ -62,6 +64,9 @@ SeaManager.prototype.checkCollisions = function() {
       if (fish.getId() < otherFish.getId() && fish.getCollision(otherFish)) {
       }
     });
+  });
+  _.each(toRemove, function(agent) {
+    that.removeAgent(agent);
   });
 };
 
