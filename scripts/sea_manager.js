@@ -1,4 +1,5 @@
 var MAX_FISH = 20;
+var MAX_BOATS = 8;
 
 var SeaManager = function() {
   this.agents = {};
@@ -6,6 +7,7 @@ var SeaManager = function() {
   this.fishes = {};
   this.nextFishAdded = 0;
   this.boats = {};
+  this.nextBoatAdded = 0;
   var that = this;
   _(5).times(function(n) {
     that.addFish(50 + 100 * n, 50 + 100 * n);
@@ -18,7 +20,7 @@ var SeaManager = function() {
 SeaManager.prototype.getRandomUnderwaterEdgePoint = function() {
   return {x:_.sample([41, Game.getWidth() - 41]),
           y:_.random(Game.water.waterLine + 20, Game.getHeight() - 20)};
-}
+};
 
 SeaManager.prototype.randomlyAddFish = function() {
   var time = createjs.Ticker.getTime(); 
@@ -27,6 +29,17 @@ SeaManager.prototype.randomlyAddFish = function() {
       _.sample([500, 2000, 5000]);
     var point = this.getRandomUnderwaterEdgePoint();
     this.addFish(point.x, point.y);
+  }
+};
+
+SeaManager.prototype.randomlyAddBoats = function() {
+  var time = createjs.Ticker.getTime();
+  if (this.nextBoatAdded < time && _.size(this.boats) < MAX_BOATS) {
+    this.nextBoatAdded = time + 
+      _.sample([500, 2000, 5000]);
+    console.log("Game width", Game.getWidth());
+    var x_value = (Game.getWidth() - 100) ;
+    this.addBoat(x_value);
   }
 };
 
