@@ -1,6 +1,6 @@
 var KRAKEN_SPRITE_DATA = {
-    images: ['images/kraken.png'],
-    frames: {width:236, height:255},
+    images: ['images/the_kraken.png'],
+    frames: {width:993, height:618},
     animations: {
         chase:0
     }
@@ -26,6 +26,8 @@ Kraken.prototype.onOutOfBounds = function(newX, newY) {
 
 Kraken.prototype.startLeft = function() {
   this.velX = -this.speed * 1.0;
+  this.shape.scaleX = Math.abs(this.shape.scaleX);
+  this.shape.rotation = 0;
 };
 
 Kraken.prototype.stopLeft = function() {
@@ -34,6 +36,8 @@ Kraken.prototype.stopLeft = function() {
 
 Kraken.prototype.startRight = function() {
   this.velX = this.speed * 1.0;
+  this.shape.scaleX = -1 * Math.abs(this.shape.scaleX);
+  this.shape.rotation = 0;
 };
 
 Kraken.prototype.stopRight = function() {
@@ -42,6 +46,8 @@ Kraken.prototype.stopRight = function() {
 
 Kraken.prototype.startUp = function() {
   this.velY = -this.speed * 1.0;
+  this.shape.scaleX = Math.abs(this.shape.scaleX);
+  this.shape.rotation = 90;
 };
 
 Kraken.prototype.stopUp = function() {
@@ -50,6 +56,8 @@ Kraken.prototype.stopUp = function() {
 
 Kraken.prototype.startDown = function() {
   this.velY = this.speed * 1.0;
+  this.shape.scaleX = Math.abs(this.shape.scaleX);
+  this.shape.rotation = -90;
 };
 
 Kraken.prototype.stopDown = function() {
