@@ -11,6 +11,10 @@ SwimmyFish.prototype.preUpdate = function(event) {
   this.brain.update(event);
 };
 
+SwimmyFish.prototype.onOutOfBounds = function(newX, newY) {
+  this.brain.makeDecision();
+};
+
 SwimmyFish.prototype.createShape = function(x, y) {
   var data = {
     images: ['images/silver-fish.png'],

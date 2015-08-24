@@ -6,6 +6,12 @@ var Kraken = function() {
 
 Kraken.prototype = new Agent();
 
+Kraken.prototype.onOutOfBounds = function(newX, newY) {
+  this.x = newX;
+  this.y = newY;
+  this.moveInBounds();
+};
+
 Kraken.prototype.startLeft = function() {
   this.velX = -this.speed * 1.0;
 };

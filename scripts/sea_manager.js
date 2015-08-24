@@ -35,8 +35,7 @@ SeaManager.prototype.checkCollisions = function() {
   for (var i = 0; i < this.fishes.length - 1; i++) {
     for (var j = i + 1; j < this.fishes.length; j++) {
       if (this.fishes[i].getCollision(this.fishes[j])) {
-        this.fishes[i].disappearForNSeconds(.5);
-        this.fishes[j].disappearForNSeconds(.5);
+        this.fishes[i].brain.makeDecision();
       }
     }
   }
@@ -53,6 +52,7 @@ SeaManager.prototype.addFish = function(x, y) {
   this.fishes.push(fish);
   this.agents.push(fish);
   Game.currentStage.addChild(fish.shape);
+  //fish.moveInBounds();
 };
 
 SeaManager.prototype.addBoat = function(x) {
