@@ -42,7 +42,6 @@ SeaManager.prototype.checkCollisions = function() {
   _.each(that.fishes, function(fish) {
     _.each(that.fishes, function(otherFish) {
       if (fish.getId() < otherFish.getId() && fish.getCollision(otherFish)) {
-        fish.brain.makeDecision();
       }
     });
   });
@@ -68,7 +67,7 @@ SeaManager.prototype.addKraken = function() {
 };
 
 SeaManager.prototype.addFish = function(x, y) {
-  var randomFishSize = _.random(5);
+  var randomFishSize = _.random(1,5);
   var fish = new SwimmyFish(x, y, randomFishSize);
   this.fishes[fish.getId()] = fish;
   this.agents[fish.getId()] = fish;
