@@ -13,6 +13,7 @@ var Kraken = function() {
   this.y = 100;
   this.shape = this.createShape(this.x, this.y);
   this.speed = 4.0;
+  this.setAgentSize(2);
 };
 
 Kraken.prototype = new Agent();
@@ -22,11 +23,6 @@ Kraken.prototype.onOutOfBounds = function(newX, newY) {
   this.y = newY;
   this.moveInBounds();
 };
-
-Kraken.prototype.grow = function() {
-  this.shape.scaleX += (0.10 *  this.shape.scaleX);
-  this.shape.scaleY += (0.10 *  this.shape.scaleY);
-}
 
 Kraken.prototype.startLeft = function() {
   this.velX = -this.speed * 1.0;

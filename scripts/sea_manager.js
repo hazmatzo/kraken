@@ -34,8 +34,8 @@ SeaManager.prototype.checkCollisions = function() {
   var that = this;
   _.each(this.agents, function(agent) {
     if (that.kraken && that.kraken.getCollision(agent)) {
+      that.kraken.eat(agent);
       that.removeAgent(agent);
-      that.kraken.grow();
     }
   });
   for (var i = 0; i < this.fishes.length - 1; i++) {
@@ -60,7 +60,7 @@ SeaManager.prototype.addKraken = function() {
 };
 
 SeaManager.prototype.addFish = function(x, y) {
-  var fish = new SwimmyFish(x, y);
+  var fish = new SwimmyFish(x, y, 1);
   this.fishes.push(fish);
   this.agents[fish.getId()] = fish;
   Game.currentStage.addChild(fish.shape);

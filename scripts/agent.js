@@ -5,6 +5,9 @@ var Agent = function () {
   this.velY = 0;
   this.speed = 1.0;
   this.scale = 1.0;
+  this.startSize = 1.0;
+  this.scaleFactorX = 1.0;
+  this.size = 1.0;
   this.visible = true;
   this.disappearance = { nextAppearance: 0 };
 };
@@ -14,6 +17,7 @@ Agent.prototype.preUpdate = function(event) {
 
 Agent.prototype.postUpdate = function(event) {
 };
+
 
 Agent.prototype.getBounds = function() {
   return {left: 0, right: Game.getWidth(),
@@ -92,6 +96,38 @@ Agent.prototype.updateVisibility = function(event) {
   this.shape.visible = this.visible;
 };
 
+Agent.prototype.setRelativeSize = function(sizeFactor) {
+  this.resize(sizeFactor * this.size); 
+};
+
+Agent.prototype.setAgentSize = function(size) {
+  this.scaleFactorX = this.shape.scaleX;
+  this.scaleFactorY = this.shape.scaleY;
+  this.startSize = size;
+  this.size = size;
+  this.scale = 1.0;
+};
+
+Agent.prototype.eat = function(agent) {
+  if (agent.size < this.size) {
+    this.grow(agent.size);
+  }
+};
+
+Agent.prototype.grow = function(foodSize) {
+  var newSize = Math.min(this.maxGrowthFactor * this.size,
+      this.size + (foodSize / 2));
+  this.resize(newSize);
+};
+
+Agent.prototype.resize = function(newSize) {
+  this.size = newSize;
+  var sizeIncrease = newSize / this.startSize;
+  this.scale = Math.sqrt(sizeIncrease);
+  this.shape.scaleX = this.scale * this.scaleFactorX;
+  this.shape.scaleY = this.scale * this.scaleFactorY;
+};
+
 Agent.prototype.disappearForNSeconds = function(n) {
   this.visible = false;
   if (!this.disappearance) {
@@ -105,4 +141,4 @@ Agent.prototype.getCollision = function(agent) {
     return false;
   }
   return ndmgr.checkPixelCollision(this.shape, agent.shape);
-}
+};

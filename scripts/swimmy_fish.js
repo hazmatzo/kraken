@@ -8,11 +8,13 @@ var SWIMMY_FISH_SPRITE_DATA = {
 
 var SWIMMY_FISH_SPRITE_SHEET = new createjs.SpriteSheet(SWIMMY_FISH_SPRITE_DATA);
 
-var SwimmyFish = function (x, y) {
+var SwimmyFish = function (x, y, relSize) {
   this.x = x;
   this.y = y;
   this.shape = this.createShape(this.x, this.y);
   this.brain = new RandomBrain(this);
+  this.setAgentSize(1);
+  this.setRelativeSize(relSize);
 };
 
 SwimmyFish.prototype = new Agent();
