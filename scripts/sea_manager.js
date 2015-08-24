@@ -1,7 +1,7 @@
 var MAX_FISH = 20;
 
 var SeaManager = function() {
-  this.agents = [];
+  this.agents = {};
   this.addKraken();
   this.fishes = [];
   this.nextFishAdded = 0;
@@ -32,32 +32,43 @@ SeaManager.prototype.randomlyAddFish = function() {
 
 SeaManager.prototype.checkCollisions = function() {
   var that = this;
+  _.each(this.agents, function(agent) {
+    if (that.kraken && that.kraken.getCollision(agent)) {
+      that.removeAgent(agent);
+    }
+  });
   for (var i = 0; i < this.fishes.length - 1; i++) {
     for (var j = i + 1; j < this.fishes.length; j++) {
       if (this.fishes[i].getCollision(this.fishes[j])) {
-        this.fishes[i].disappearForNSeconds(.5);
-        this.fishes[j].disappearForNSeconds(.5);
+        // this.fishes[i].disappearForNSeconds(.5);
+        // this.fishes[j].disappearForNSeconds(.5);
       }
     }
   }
 };
 
+SeaManager.prototype.removeAgent = function(agent) {
+  Game.currentStage.removeChild(agent.shape);
+  delete this.agents[agent.getId()];
+};
+
+
 SeaManager.prototype.addKraken = function() {
   this.kraken = new Kraken();
-  this.agents.push(this.kraken);
+  this.agents[this.kraken.getId()] = this.kraken;
   Game.currentStage.addChild(this.kraken.shape);
 };
 
 SeaManager.prototype.addFish = function(x, y) {
   var fish = new SwimmyFish(x, y);
   this.fishes.push(fish);
-  this.agents.push(fish);
+  this.agents[fish.getId()] = fish;
   Game.currentStage.addChild(fish.shape);
 };
 
 SeaManager.prototype.addBoat = function(x) {
   var boat = new Boat(x);
   this.boats.push(boat);
-  this.agents.push(boat);
+  this.agents[boat.getId()] = boat;
   Game.currentStage.addChild(boat.shape);
 };
