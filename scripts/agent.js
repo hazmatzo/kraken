@@ -9,6 +9,7 @@ var Agent = function () {
   this.scaleFactorX = 1.0;
   this.size = 1.0;
   this.visible = true;
+  this.maxGrowthFactor = 1.1;
   this.disappearance = { nextAppearance: 0 };
 };
 
@@ -111,7 +112,9 @@ Agent.prototype.setAgentSize = function(size) {
 Agent.prototype.eat = function(agent) {
   if (agent.size < this.size) {
     this.grow(agent.size);
+    return true;
   }
+  return false;
 };
 
 Agent.prototype.grow = function(foodSize) {
