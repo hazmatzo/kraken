@@ -6,10 +6,12 @@ var Agent = function () {
   this.speed = 1.0;
   this.scale = 1.0;
   this.startSize = 1.0;
+  this.shrinkFactor = .75;
   this.scaleFactorX = 1.0;
   this.size = 1.0;
   this.visible = true;
   this.maxGrowthFactor = 1.1;
+  this.shrinkDebounce = 2000;
   this.disappearance = { nextAppearance: 0 };
 };
 
@@ -110,13 +112,18 @@ Agent.prototype.setAgentSize = function(size) {
 };
 
 Agent.prototype.eat = function(agent) {
-  if (agent.size < this.size) {
+  if (agent.size < this.size / 2) {
     this.grow(agent.size);
     return true;
+  } else if (agent.size > this.size) {
+    this.shrink();
   }
   return false;
 };
 
+Agent.prototype.shrink = function() {
+  this.resize(this.size * this.shrinkFactor);
+}
 Agent.prototype.grow = function(foodSize) {
   var newSize = Math.min(this.maxGrowthFactor * this.size,
       this.size + (foodSize / 2));
