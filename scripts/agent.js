@@ -184,13 +184,17 @@ Agent.prototype.disappearForNSeconds = function(n) {
   this.debounce("appear", n * 1000);
 };
 
-Agent.prototype.getCollision = function(agent) {
+Agent.prototype.getCollision = function(agent, fast) {
   if (agent.getId() == this.getId()) {
     return false;
   }
   var collides = false;
   try {
-    collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+    if (fast) {
+      collides = ndmgr.checkRectCollision(this.shape, agent.shape);
+    } else {
+      collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+    }
   }
   finally {
     return collides;
