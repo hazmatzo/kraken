@@ -1,8 +1,9 @@
 var Intro = {};
 
-Intro.init = function() {
+Intro.init = function(screen) {
   Intro.setup();
-  Intro.draw();
+  var screenType = screen || "intro";
+  Intro.draw(screenType);
   Intro.currentStage.update();
   createjs.Ticker.addEventListener("tick", Intro.tick);
 };
@@ -14,9 +15,9 @@ Intro.setup = function(toDoNext) {
   Intro.resize();
 };
 
-Intro.draw = function() {
+Intro.draw = function(screen) {
   Intro.createBackground();
-  Intro.createCover();
+  Intro.createCover(screen);
 };
 
 Intro.tick = function(event) {
@@ -61,10 +62,36 @@ var COVER_SPRITE_DATA = {
     }
   };
 
+var WIN_SPRITE_DATA = {
+    images: ['images/win_screen.png'],
+    frames: {width:1706, height:1354},
+    animations: {
+        show:0
+    }
+  };
+
+var LOSE_SPRITE_DATA = {
+    images: ['images/lose_screen.png'],
+    frames: {width:1706, height:1354},
+    animations: {
+        show:0
+    }
+  };
+
 var COVER_SPRITE_SHEET = new createjs.SpriteSheet(COVER_SPRITE_DATA);
 
-Intro.createCover = function() {
-  var sprite = new createjs.Sprite(COVER_SPRITE_SHEET, 'show');
+var LOSE_SPRITE_SHEET = new createjs.SpriteSheet(LOSE_SPRITE_DATA);
+
+var WIN_SPRITE_SHEET = new createjs.SpriteSheet(WIN_SPRITE_DATA);
+Intro.createCover = function(screen) {
+  var sprite = null;
+  if (screen == "win") {
+    sprite = new createjs.Sprite(WIN_SPRITE_SHEET, 'show');
+  } else if (screen == "lose") {
+    sprite = new createjs.Sprite(LOSE_SPRITE_SHEET, 'show');
+  } else {
+    sprite = new createjs.Sprite(COVER_SPRITE_SHEET, 'show');
+  }
   var width = COVER_SPRITE_DATA.frames.width;
   var height = COVER_SPRITE_DATA.frames.height;
   sprite.setBounds(0, 0, width, height);
