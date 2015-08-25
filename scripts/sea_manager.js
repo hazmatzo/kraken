@@ -56,7 +56,7 @@ SeaManager.prototype.checkCollisions = function() {
   var toRemove = [];
   _.each(that.agents, function(agent) {
     if (that.kraken && that.kraken.getCollision(agent)) {
-      if (that.kraken.eat(agent)) {
+      if (that.kraken.eat(agent, false)) {
         var instance = createjs.Sound.play("chomp1");
         instance.volume = 0.5;
         that.removeAgent(agent);
@@ -64,12 +64,14 @@ SeaManager.prototype.checkCollisions = function() {
       }
     }
   });
+  /*
   _.each(that.fishes, function(fish) {
     _.each(that.fishes, function(otherFish) {
       if (fish.getId() < otherFish.getId() && fish.getCollision(otherFish)) {
       }
     });
   });
+  */
   _.each(toRemove, function(agent) {
     that.removeAgent(agent);
   });

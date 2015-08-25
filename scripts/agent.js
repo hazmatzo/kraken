@@ -100,9 +100,9 @@ Agent.prototype.willBeOutOfBounds = function(newX, newY) {
       newUp < bounds.top || newDown > bounds.bottom;
 };
 
-Agent.prototype.debounce = function(debounceName, length) {
+Agent.prototype.debounce = function(debounceName, length, force) {
   var debounceValue = this.debounces[debounceName] || 0;
-  if (debounceValue < createjs.Ticker.getTime()) {
+  if (debounceValue < createjs.Ticker.getTime() || force) {
     var nextLength = length || 0;
     if (!nextLength) {
       nextLength = this.getDebounceValues()[debounceName] || 0;
@@ -184,15 +184,30 @@ Agent.prototype.disappearForNSeconds = function(n) {
   this.debounce("appear", n * 1000);
 };
 
-Agent.prototype.getCollision = function(agent) {
+Agent.prototype.getCollision = function(agent, fast) {
   if (agent.getId() == this.getId()) {
     return false;
   }
   var collides = false;
   try {
-    collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+    if (fast) {
+      collides = ndmgr.checkRectCollision(this.shape, agent.shape);
+    } else {
+      collides = ndmgr.checkPixelCollision(this.shape, agent.shape);
+    }
   }
   finally {
     return collides;
   }
 };
+
+Agent.prototype.distanceFrom = function(agent) {
+  var xDisp = agent.x - this.x;
+  var yDisp = agent.y - this.y;
+  var dist = Math.sqrt(xDisp * xDisp + yDisp * yDisp);
+  return {
+    x: xDisp,
+    y: yDisp,
+    distance: dist };
+};
+
