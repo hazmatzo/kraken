@@ -37,10 +37,12 @@ Game.tick = function(event) {
   })
   Game.currentStage.update();
   if (Game.seaManager.checkWinCondition()) {
+    createjs.Ticker.removeAllEventListeners();
     Game.currentStage.removeAllChildren();
     Intro.init();
   }
   if (Game.seaManager.checkLoseCondition()) {
+    createjs.Ticker.removeAllEventListeners();
     Game.currentStage.removeAllChildren();
     Intro.init();
   }

@@ -78,6 +78,7 @@ Intro.createCover = function() {
   Intro.currentStage.addChild(sprite);
   sprite.addEventListener('click', function(event) {
     Intro.currentStage.removeAllChildren();
+    createjs.Ticker.removeAllEventListeners();
     Game.init();
   })
 };
