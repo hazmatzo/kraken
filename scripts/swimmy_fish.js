@@ -32,7 +32,7 @@ var SwimmyFish = function (x, y, relSize) {
   this.x = x;
   this.y = y;
   this.shape = this.createShape(this.x, this.y);
-  this.brain = new RandomBrain(this);
+  this.brain = new SmartBrain(this, .2, 1, 200);
   this.setAgentSize(1);
   this.setRelativeSize(relSize);
 };
@@ -44,6 +44,9 @@ SwimmyFish.prototype.preUpdate = function(event) {
 };
 
 SwimmyFish.prototype.onOutOfBounds = function(newX, newY) {
+  this.x = newX;
+  this.y = newY;
+  this.moveInBounds();
   this.brain.makeDecision();
 };
 

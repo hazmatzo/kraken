@@ -100,9 +100,9 @@ Agent.prototype.willBeOutOfBounds = function(newX, newY) {
       newUp < bounds.top || newDown > bounds.bottom;
 };
 
-Agent.prototype.debounce = function(debounceName, length) {
+Agent.prototype.debounce = function(debounceName, length, force) {
   var debounceValue = this.debounces[debounceName] || 0;
-  if (debounceValue < createjs.Ticker.getTime()) {
+  if (debounceValue < createjs.Ticker.getTime() || force) {
     var nextLength = length || 0;
     if (!nextLength) {
       nextLength = this.getDebounceValues()[debounceName] || 0;
@@ -196,3 +196,14 @@ Agent.prototype.getCollision = function(agent) {
     return collides;
   }
 };
+
+Agent.prototype.distanceFrom = function(agent) {
+  var xDisp = agent.x - this.x;
+  var yDisp = agent.y - this.y;
+  var dist = Math.sqrt(xDisp * xDisp + yDisp * yDisp);
+  return {
+    x: xDisp,
+    y: yDisp,
+    distance: dist };
+};
+
