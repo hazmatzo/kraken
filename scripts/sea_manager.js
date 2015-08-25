@@ -21,6 +21,9 @@ var SeaManager = function() {
   _(2).times(function(n) {
     that.addBoat(200 + 100 * n);
   });
+  _(5).times(function(n) {
+    that.addSeaweed();
+  });
 };
 
 SeaManager.prototype.getRandomUnderwaterEdgePoint = function() {
@@ -84,7 +87,6 @@ SeaManager.prototype.removeAgent = function(agent) {
   }
 };
 
-
 SeaManager.prototype.addKraken = function() {
   this.kraken = new Kraken(Game.getWidth()/2, Game.getHeight()/2);
   this.agents[this.kraken.getId()] = this.kraken;
@@ -130,3 +132,10 @@ SeaManager.prototype.checkLoseCondition = function() {
 SeaManager.prototype.checkWinCondition = function() {
   return this.kraken.size >= this.kraken.maxSize;
 }
+
+SeaManager.prototype.addSeaweed = function() {
+  var seaweed = new Seaweed();
+  this.agents[seaweed.getId()] = seaweed;
+  console.log(seaweed);
+  Game.currentStage.addChild(seaweed.shape);
+};
