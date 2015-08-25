@@ -21,7 +21,7 @@ var SeaManager = function() {
   _(2).times(function(n) {
     that.addBoat(200 + 100 * n);
   });
-  _(5).times(function(n) {
+  _(2).times(function(n) {
     that.addSeaweed();
   });
 };
@@ -136,6 +136,5 @@ SeaManager.prototype.checkWinCondition = function() {
 SeaManager.prototype.addSeaweed = function() {
   var seaweed = new Seaweed();
   this.agents[seaweed.getId()] = seaweed;
-  console.log(seaweed);
   Game.currentStage.addChild(seaweed.shape);
 };
